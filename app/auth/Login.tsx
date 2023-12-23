@@ -1,0 +1,12 @@
+'use client'
+
+import {signIn} from 'next-auth/react'
+
+export default function login(){
+    return(
+        <li className="list-none">
+            <button onClick={() => signIn()}className="text-sm">Sign In
+            </button>
+        </li>
+    )
+}
