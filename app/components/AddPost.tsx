@@ -1,10 +1,19 @@
 'use client'
 
 import { useState } from "react"
+import {useMutation, useQueryClient} from '@tanstack/react-query'
+import axios from "axios"
+//allows you to make a mutation --> updating, deleting, or creating
 
 export default function CreatePost(){
     const [title, setTitle] = useState("")
     const [isDisabled, setDisabled] = useState(false)
+
+    //Create a post
+    const {mutate} = useMutation(
+        async (title) => await axios.post("/api/posts/addPost", {title})
+    )
+
     return (
         <form className="bg-white my-8 p-8 rounded-md">
             <div className="flex flex-col my-4">
