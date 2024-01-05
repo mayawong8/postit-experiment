@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import {useMutation, useQueryClient} from '@tanstack/react-query'
-import axios from "axios"
+// import {useMutation} from 'react-query'
+import axios, { AxiosResponse } from "axios"
 //allows you to make a mutation --> updating, deleting, or creating
 
 export default function CreatePost(){
@@ -11,11 +12,23 @@ export default function CreatePost(){
 
     //Create a post
     const {mutate} = useMutation(
-        async (title) => await axios.post("/api/posts/addPost", {title})
+        async (title: any) => 
+        await axios.post("/api/posts/addPost", {
+            title
+        })
     )
 
+    const submitPost = async (e: React.FormEvent) => {
+        console.log("OKAYYYYYYYYYY")
+        e.preventDefault()
+        setDisabled(true)
+        console.log("reached 1")
+        mutate(title)
+        console.log("reached 2")
+    }
+
     return (
-        <form className="bg-white my-8 p-8 rounded-md">
+        <form onSubmit={submitPost} className="bg-white my-8 p-8 rounded-md">
             <div className="flex flex-col my-4">
                 <textarea 
                 onChange={(e) => setTitle(e.target.value)} 
