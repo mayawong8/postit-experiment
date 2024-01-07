@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from "axios"
 
 export default function CreatePost(){
     const [title, setTitle] = useState("")
-    const [isDisabled, setDisabled] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
 
     const queryClient = useQueryClient()
 
@@ -15,12 +15,22 @@ export default function CreatePost(){
         async (title: string) =>
             await axios.post("/api/posts/addPosts", {
                 title,
-        }),
+        }), {
+            onError: (error) => {
+                console.log("ERRORRRRRRRR")
+                console.log(error)
+            },
+            onSuccess: (data) => {
+                console.log(data)
+                setTitle('')
+                setIsDisabled(false)
+            }
+        }
     )
 
     const submitPost = async (e: React.FormEvent) => {
         e.preventDefault()
-        setDisabled(true)
+        setIsDisabled(true)
         mutate(title)
     }
 
