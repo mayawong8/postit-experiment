@@ -14,7 +14,7 @@ export default async function handler(
         }
         const title: string = req.body.title
 
-        const prismaUser = prisma.user.findUnique({
+        const prismaUser = await prisma.user.findUnique({
             where: {email: session?.user?.email}
         })
 
