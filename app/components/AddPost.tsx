@@ -2,12 +2,14 @@
 
 import { useState } from "react"
 import {useMutation, useQueryClient} from 'react-query'
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
+import toast from 'react-hot-toast'
 
 export default function CreatePost(){
     const [title, setTitle] = useState("")
     const [isDisabled, setIsDisabled] = useState(false)
 
+    let toastPostId: string
     const queryClient = useQueryClient()
 
     //Create a post
@@ -17,11 +19,13 @@ export default function CreatePost(){
                 title,
         }), {
             onError: (error) => {
-                console.log("ERRORRRRRRRR")
-                console.log(error)
+                if (error instanceof AxiosError){
+                    toast.error(error?.response?.data.message, {id: toastPostId})
+                }
+                setIsDisabled(false)
             },
             onSuccess: (data) => {
-                console.log(data)
+                toast.success("Post has been made. Slay.", {id: toastPostId})
                 setTitle('')
                 setIsDisabled(false)
             }
@@ -30,6 +34,7 @@ export default function CreatePost(){
 
     const submitPost = async (e: React.FormEvent) => {
         e.preventDefault()
+        toastPostId = toast.loading("Creating your post", {id: toastPostId})
         setIsDisabled(true)
         mutate(title)
     }
