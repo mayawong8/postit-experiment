@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  posts         Post[]    // Add this line to establish the opposite relation
+}
+
+
 model Post {
   id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
@@ -18,6 +30,16 @@ model Post {
   published Boolean   @default(false)
   userId    String
   user      User      @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id String @id @default(cuid())
+  message String
+  postId String
+  userId String
+  createdAt DateTime @default(now())
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Account {
@@ -47,16 +69,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]    // Add this line to establish the opposite relation
-}
 
 model VerificationToken {
   identifier String
