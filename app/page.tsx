@@ -5,6 +5,15 @@ import {useQuery} from 'react-query'
 import Post from './components/Post'
 
 //Fetch all posts
+interface PostType {
+  id: string;
+  user: {
+    name: string;
+    image: string;
+  };
+  title: string;
+}
+
 const allPosts = async() => {
   const response = await axios.get("/api/posts/getPosts")
   return response.data
@@ -20,7 +29,7 @@ export default function Home() {
   return (
     <main>
       <AddPost/>
-      {data?.map((post)=> (
+      {data?.map((post: PostType)=> (
         <Post 
         key={post.id} 
         name={post.user.name} 
