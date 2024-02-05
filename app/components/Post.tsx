@@ -2,14 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-interface PostProps {
-  avatar: string;
-  name: string;
-  postTitle: string;
-  id: string;
-}
-
-export default function Post({avatar,name,postTitle,id}: PostProps){
+export default function Post({avatar,name,postTitle,id,comments}){
     return(
         <div className="bg-white my-8 p-8 rounded-lg">
             <div className="flex items-center gap-2">
@@ -28,7 +21,7 @@ export default function Post({avatar,name,postTitle,id}: PostProps){
 
             <div className="flex gap-4 cursor-pointer items-center">
                 <Link href={`/post/${id}`}>
-                    <p className="text-sm font-bold text-gray-700">Comment</p>
+                    <p className="text-sm font-bold text-gray-700">{comments?.length} Comments</p>
                 </Link>
             </div>
         </div>
