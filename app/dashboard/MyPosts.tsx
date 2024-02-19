@@ -19,14 +19,14 @@ export default function MyPosts() {
     return (
         <div>
             {data?.posts?.map((post) => (
-            <EditPost 
-            id={post.id} 
-            key={post.id} 
-            avatar={data.image} 
-            name={data.name} 
-            title={post.title} 
-            comments={post.comments}
-            />
+                <EditPost 
+                id={post.id} 
+                key={post.id} 
+                avatar={data.image} 
+                name={data.name} 
+                title={post.title} 
+                comments={post.Comment}
+                />
             ))}
         </div>
     )
