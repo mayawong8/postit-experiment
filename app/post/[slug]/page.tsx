@@ -5,6 +5,7 @@ import { useQuery } from "react-query"
 import axios from "axios"
 import { PostType } from "@/app/types/Posts"
 import Post from "@/app/components/Post"
+import AddComment from "@/app/components/AddComment"
 
 type URL = {
     params: {
@@ -31,6 +32,8 @@ export default function PostDetail(url: URL) {
             avatar={data.user.image} 
             postTitle={data.title} 
             comments={data.comments}/>
+            <AddComment id={data?.id}/>
         </div>
+        
     )
 }
