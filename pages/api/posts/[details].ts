@@ -7,7 +7,6 @@ export default async function handler(
 ){
     
     if(req.method === "GET"){
-        //fetch all posts
         try{
             console.log(req.query)
             const data = await prisma.post.findUnique({
